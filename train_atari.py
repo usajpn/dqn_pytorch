@@ -32,7 +32,7 @@ def get_args():
     p.add_argument('--render-train', '-r', action='store_true')
     p.add_argument('--render-val', '-v', action='store_true')
     p.add_argument('--extension', '-e', default='cpu')
-    p.add_argument('--device-id', '-d', default='0')
+    p.add_argument('--device-id', '-d', type=int, default=0)
     p.add_argument('--log_path', '-l', default='./tmp.output')
 
     return p.parse_args()

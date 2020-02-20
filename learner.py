@@ -101,7 +101,7 @@ class QLearner(object):
 
         # detach to prohibit backpropagating for target q network
         next_q_max = self.q_target(snext).detach().max(1)[0]
-        q_a_target = clipped_r + self.gamma * (1 - t) * next_q_max
+        q_a_target = (clipped_r + self.gamma * (1 - t) * next_q_max).view(-1, 1)
 
         loss = F.smooth_l1_loss(q_a, q_a_target)
 
@@ -111,8 +111,8 @@ class QLearner(object):
         self.optimizer.step()
 
         if self.update_count % self.sync_freq == 0:
-            q_target.load_state_dict(q.state_dict())
+            self.q_target.load_state_dict(self.q.state_dict())
         if self.update_count % self.save_freq == 0:
             self.save_model()
 
-        return loss
+        return loss.clone().data.cpu().numpy()

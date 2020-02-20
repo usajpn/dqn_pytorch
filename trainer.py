@@ -27,16 +27,6 @@ class Trainer(object):
         self.validator = validator
         self.steps = 0
         self.losses = []
-#        self.monitor = None
-#        if monitor:
-#            monitor_loss = MonitorSeries("QNetwork Loss", monitor)
-#            monitor_epsilon = MonitorSeries("Epsilon", monitor)
-#            monitor_train_reward = MonitorSeries("Train Reward", monitor)
-#            self.monitor = {
-#                'loss': monitor_loss,
-#                'epsilon': monitor_epsilon,
-#                'reward': monitor_train_reward
-#            }
         self.tbw = tbw
 
     def trained_steps(self):
@@ -97,13 +87,11 @@ class Trainer(object):
 
         # log output
         if self.trained_steps() >= 0:
-#            if self.monitor:
-#                self.monitor['loss'].add(self.trained_steps(),
-#                                         np.mean(self.losses))
-#                self.monitor['reward'].add(self.trained_steps(),
-#                                           np.mean(total_rewards))
-#                self.monitor['epsilon'].add(self.trained_steps(),
-#                                            self.explorer.epsilon)
+            print("{}\tloss:{}\treward:{}\tepsilon{}".format(
+                  self.trained_steps(),
+                  np.mean(self.losses),
+                  np.mean(total_rewards),
+                  self.explorer.epsilon))
             if self.tbw:
                 self.tbw.add_scalar('training/loss',
                                     np.mean(self.losses), self.trained_steps())
@@ -113,7 +101,7 @@ class Trainer(object):
                                     self.explorer.epsilon, self.trained_steps())
 
         # validate if validator is available
-        if self.validator:
-            self.validator.step(self.trained_steps())
+#        if self.validator:
+#            self.validator.step(self.trained_steps())
 
         self.losses = []
