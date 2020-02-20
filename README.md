@@ -1,6 +1,7 @@
 # Deep Q Network
 
 This is a PyTorch implementation of DQN.
+[Here](https://github.com/sony/nnabla-examples/tree/master/reinforcement_learning/dqn) is the similar implementation in SONY NNabla.
 
 * [Mnih et.al., Human-level control through deep reinforcement learning.](https://www.nature.com/articles/nature14236)
 
